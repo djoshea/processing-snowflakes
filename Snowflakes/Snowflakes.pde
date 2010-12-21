@@ -18,6 +18,8 @@
 int screenX = 1000;
 int screenY = 620;
 int MAX_BRANCH_LENGTH = 100;
+float fractionSingleBranchPoints = 0.6;
+
 SnowflakeManager mgr;
 PFont fontGreeting, fontFooter;
 
@@ -129,6 +131,7 @@ class Snowflake {
   float lengthFraction = random(0.4, 0.6);
   float angle = random(PI/4, PI/2.5); // + PI/12.0*sin(animationPhase(4,0));
   float myColor;
+  int numBranchPoints;
   int nMainBranches = Math.round(random(5, 7));
   
   Snowflake(Vector _center){
@@ -143,6 +146,10 @@ class Snowflake {
     lengthMainBranches = random(30, MAX_BRANCH_LENGTH);
     angularSpeed = random(-.25, .25);
     myColor = random(100, 255);
+    if(random(100) > fractionSingleBranchPoints)
+      numBranchPoints = 2;
+    else
+      numBranchPoints = 1;
   }
   
   void descend() {
@@ -177,8 +184,10 @@ class Snowflake {
     
     // check to see if we're too deep in the recursion
     if(recursionDepth < maxRecursionDepth) {
-      drawSubbranch(start, end, branchFraction, lengthFraction, angle, recursionDepth, maxRecursionDepth);
-      drawSubbranch(start, end, branchFraction, lengthFraction, -angle, recursionDepth, maxRecursionDepth);
+      for(int i = 0; i < numBranchPoints; i++) {
+          drawSubbranch(start, end, branchFraction/(i+1), lengthFraction/(i+1), angle, recursionDepth, maxRecursionDepth);
+          drawSubbranch(start, end, branchFraction/(i+1), lengthFraction/(i+1), -angle, recursionDepth, maxRecursionDepth);
+      }
     }
   }
   
