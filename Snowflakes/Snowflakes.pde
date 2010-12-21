@@ -19,20 +19,60 @@ int screenX = 1000;
 int screenY = 620;
 int MAX_BRANCH_LENGTH = 100;
 SnowflakeManager mgr;
+PFont fontGreeting, fontFooter;
 
 void setup() {
   size(screenX, screenY);
    
+  // initialize greeting font
+  fontGreeting = createFont("Santa'sSleighFull", 70);
+  fontFooter = createFont("Myriad Pro",12);
+   
   mgr = new SnowflakeManager();
-  for(int i = 0; i < 40; i++)
+  for(int i = 0; i < 30; i++)
     mgr.spawnSnowflake(true);
 }
 
 void draw() {
-  background(20, 0, 20);
+  background(0, 0, 0);
   smooth();
   
+  // draw merry christmas text in center
+    drawGreeting();
+  
   mgr.drawAll();
+}
+
+void drawGreeting() {
+  float startFade = 2000;
+  float endFade = 5000;
+  float time = millis();
+  float alpha;
+  
+  
+  if(time <= endFade) {
+    if(time <= startFade)
+      alpha = 255;
+    else if(time > endFade)
+      alpha = 0;
+    else
+      alpha = 255.0*(endFade-time)/(endFade-startFade);
+      
+    textFont(fontGreeting);
+    textAlign(CENTER, BASELINE);
+    fill(255, 150, 150, alpha);
+    textSize(80);
+    text("Merry Christmas",screenX/2, screenY/2-100);
+    fill(150, 255, 150, alpha);
+    textSize(50);
+    text("From the O'Shea Family!", screenX/2, screenY/2-35);
+ }
+ 
+ textFont(fontFooter);
+ textAlign(RIGHT, BOTTOM);
+ fill(255, 200);
+ textSize(12);
+ text("christmas 2010", screenX-5, screenY-5);
 }
 
 float animationPhase(float periodSec, float offset) {
