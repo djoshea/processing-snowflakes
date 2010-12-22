@@ -15,8 +15,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-int screenX = 1440;
-int screenY = 900;
+int screenX = 1000;
+int screenY = 800;
 int MAX_BRANCH_LENGTH = 100;
 float fractionSingleBranchPoints = 0.6;
 
