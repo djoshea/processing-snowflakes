@@ -146,7 +146,7 @@ class Snowflake {
     lengthMainBranches = random(30, MAX_BRANCH_LENGTH);
     angularSpeed = random(-.25, .25);
     myColor = random(100, 255);
-    if(random(100) > fractionSingleBranchPoints)
+    if(random(1) > fractionSingleBranchPoints)
       numBranchPoints = 2;
     else
       numBranchPoints = 1;
