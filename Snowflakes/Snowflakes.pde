@@ -1,5 +1,5 @@
  /*
-  Copyright (c) 2010 by Dan O'Shea, Ryan O'Shea. 
+  Copyright (c) 2010 by Dan O'Shea (http://djoshea.com/), Ryan O'Shea (http://ryanoshea.com/). 
  
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-int screenX = 1000;
-int screenY = 620;
+int screenX = 1440;
+int screenY = 900;
 int MAX_BRANCH_LENGTH = 100;
 float fractionSingleBranchPoints = 0.6;
 
@@ -27,8 +27,8 @@ void setup() {
   size(screenX, screenY);
    
   // initialize greeting font
-  fontGreeting = createFont("Santa'sSleighFull", 70);
-  fontFooter = createFont("Myriad Pro",12);
+  fontGreeting = loadFont("ScriptMTBold-72.vlw");
+  fontFooter = loadFont("MyriadWebPro-12.vlw");
    
   mgr = new SnowflakeManager();
   for(int i = 0; i < 30; i++)
@@ -36,11 +36,11 @@ void setup() {
 }
 
 void draw() {
-  background(0, 0, 0);
+  background(20, 0, 20);
   smooth();
   
   // draw merry christmas text in center
-    drawGreeting();
+  drawGreeting();
   
   mgr.drawAll();
 }
@@ -49,26 +49,45 @@ void drawGreeting() {
   float startFade = 2000;
   float endFade = 5000;
   float time = millis();
+  
   float alpha;
-  
-  
-  if(time <= endFade) {
-    if(time <= startFade)
-      alpha = 255;
-    else if(time > endFade)
-      alpha = 0;
-    else
-      alpha = 255.0*(endFade-time)/(endFade-startFade);
-      
-    textFont(fontGreeting);
-    textAlign(CENTER, BASELINE);
-    fill(255, 150, 150, alpha);
-    textSize(80);
-    text("Merry Christmas",screenX/2, screenY/2-100);
-    fill(150, 255, 150, alpha);
-    textSize(50);
-    text("From the O'Shea Family!", screenX/2, screenY/2-35);
- }
+  float r1 = 255;
+  float g1;
+  float b1;
+  float r2;
+  float g2 = 255;
+  float b2;
+    
+  if(time <= startFade) {
+    alpha = 255;
+    g1 = 150;
+    b1 = 150;
+    r2 = 150;
+    b2 = 150;
+  } else if(time > endFade) {
+    alpha = 55;
+    r1 = 255;
+    g1 = 255;
+    b1 = 255;
+    r2 = 255; 
+    g2 = 255;
+    b2 = 255;
+  } else {
+    alpha = 255 - 200.0*(time - startFade)/(endFade-startFade);
+    g1 = 150.0 + 105.0*(time - startFade)/(endFade-startFade);
+    b1 = 150.0 + 105.0*(time - startFade)/(endFade-startFade);
+    r2 = 150.0 + 105.0*(time - startFade)/(endFade-startFade);
+    b2 = 150.0 + 105.0*(time - startFade)/(endFade-startFade);
+  }
+    
+  textFont(fontGreeting);
+  textAlign(CENTER, BASELINE);
+  fill(r1, g1, b1, alpha);
+  textSize(80);
+  text("Merry Christmas",screenX/2, screenY/2-100);
+  fill(r2, g2, b2, alpha);
+  textSize(50);
+  text("From the O'Shea Family!", screenX/2, screenY/2-35);
  
  textFont(fontFooter);
  textAlign(RIGHT, BOTTOM);
